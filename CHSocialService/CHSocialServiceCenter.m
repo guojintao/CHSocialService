@@ -122,12 +122,12 @@ typedef void(^ResultCallback)(BOOL successful) ;
                   urlResource:(NSString *)url
                    completion:(void(^)(BOOL successful))finish{
     UMSocialUrlResource *resource = [[UMSocialUrlResource alloc]initWithSnsResourceType:UMSocialUrlResourceTypeImage url:imageURL];
-    UMSocialUrlResource *sinaResource = [[UMSocialUrlResource alloc]initWithSnsResourceType:UMSocialUrlResourceTypeWeb url:url];
+    UMSocialUrlResource *sinaResource = [[UMSocialUrlResource alloc]initWithSnsResourceType:UMSocialUrlResourceTypeVideo url:url];
     UMSocialWechatSessionData *wechatData = [[UMSocialWechatSessionData alloc]init];
     wechatData.wxMessageType =  UMSocialWXMessageTypeWeb;
     wechatData.title = title;
     wechatData.shareText = content;
-    wechatData.shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
+
    // wechatData.urlResource = resource;
     wechatData.url = url;
     UMSocialQQData *qqData = [[UMSocialQQData alloc]init];
@@ -142,6 +142,9 @@ typedef void(^ResultCallback)(BOOL successful) ;
         sinaData.shareImage = image;
         wechatData.shareImage = image;
             qqData.shareImage = image;
+    }else{
+         sinaData.shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
+         wechatData.shareImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
     }
     sinaData.urlResource = sinaResource;
     [UMSocialData defaultData].extConfig.qqData = qqData;
